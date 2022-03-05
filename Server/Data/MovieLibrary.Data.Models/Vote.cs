@@ -4,7 +4,7 @@
 
     using MovieLibrary.Data.Common.Models;
 
-    public class Vote : BaseModel<int>
+    public class Vote : BaseDeletableModel<int>
     {
         [Required]
         public byte Value { get; set; }
