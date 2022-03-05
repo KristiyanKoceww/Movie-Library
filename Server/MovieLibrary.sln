@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.Services.Data.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.Web.Tests", "Tests\MovieLibrary.Web.Tests\MovieLibrary.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLibrary", "MovieLibrary\MovieLibrary.csproj", "{4F3BA541-84AD-4172-9633-D72B6E8FE231}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.Web", "MovieLibrary\MovieLibrary.Web.csproj", "{4F3BA541-84AD-4172-9633-D72B6E8FE231}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
