@@ -20,7 +20,7 @@ namespace MovieLibrary.Web.Controllers
             this.noteService = noteService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("AddNote")]
         public async Task<IActionResult> AddMovieNote([FromForm] CreateNoteModel createNoteModel)
         {
@@ -35,7 +35,7 @@ namespace MovieLibrary.Web.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("RemoveNote")]
         public async Task<IActionResult> RemoveMovieNote([FromForm] DeleteMovieNoteModel deleteMovieNoteModel)
         {
@@ -50,7 +50,7 @@ namespace MovieLibrary.Web.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("GetMovieNote")]
         public async Task<IActionResult> GetMovieNote([FromForm] GetMovieNoteModel getMovieNoteModel)
         {

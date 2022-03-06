@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-using MovieLibrary.Data.Models;
-using MovieLibrary.Services.Data.JwtService;
-using MovieLibrary.Services.Data.UsersService;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace MovieLibrary.Web.Controllers
+﻿namespace MovieLibrary.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+
+    using MovieLibrary.Data.Models;
+    using MovieLibrary.Services.Data.JwtService;
+    using MovieLibrary.Services.Data.UsersService;
+    using Newtonsoft.Json;
+    using System;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -21,20 +21,17 @@ namespace MovieLibrary.Web.Controllers
         private readonly IUsersService userService;
         private readonly ILogger<UsersController> logger;
         private readonly MovieLibrary.Services.Data.JwtService.Manager signInManager;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtAuthService jwtAuthService;
 
         public UsersController(
             IUsersService userService,
             ILogger<UsersController> logger,
            MovieLibrary.Services.Data.JwtService.Manager signInManager,
-            UserManager<ApplicationUser> userManager,
             JwtAuthService jwtAuthService)
         {
             this.userService = userService;
             this.logger = logger;
             this.signInManager = signInManager;
-            this.userManager = userManager;
             this.jwtAuthService = jwtAuthService;
         }
 

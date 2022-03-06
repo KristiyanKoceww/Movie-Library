@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
     using MovieLibrary.Data.Common.Repositories;
     using MovieLibrary.Data.Models;
@@ -66,19 +67,6 @@
             {
                 throw new Exception("There are no movies added in favourites.");
             }
-
-            //var movies = user.Movies.Select(x => new Movie()
-            //{
-            //    Id = x.Id,
-            //    Title = x.Title,
-            //    Description = x.Description,
-            //    Lenght = x.Lenght,
-            //    Year = x.Lenght,
-            //    ImageUrl = x.ImageUrl,
-            //    MovieNotes = x.MovieNotes,
-            //    Categories = x.Categories,
-            //    Votes = x.Votes,
-            //}).ToList();
 
             return user.Movies;
         }

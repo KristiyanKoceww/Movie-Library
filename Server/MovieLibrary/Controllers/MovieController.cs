@@ -5,7 +5,7 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    
+
     using MovieLibrary.Services.Data.MovieService;
     using Newtonsoft.Json;
 

@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MovieLibrary.Services.Data.VoteService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MovieLibrary.Web.Controllers
+﻿namespace MovieLibrary.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using MovieLibrary.Services.Data.VoteService;
+    using System;
+    using System.Threading.Tasks;
+
     [ApiController]
     [Route("api/[controller]")]
     public class VotesController : ControllerBase
@@ -20,7 +17,7 @@ namespace MovieLibrary.Web.Controllers
             this.votesService = votesService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("AddVote")]
         public async Task<IActionResult> Vote(CreateVoteModel model)
         {
@@ -28,7 +25,7 @@ namespace MovieLibrary.Web.Controllers
             return Ok();
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("RemoveVote")]
         public async Task<IActionResult> RemoveVote(string movieId, string userId)
         {
@@ -42,13 +39,13 @@ namespace MovieLibrary.Web.Controllers
 
                 return BadRequest(new { message = ex.Message });
             }
-          
+
         }
-        //[Authorize]
-       [HttpGet("GetVote")]
+        [Authorize]
+        [HttpGet("GetVote")]
         public int GetVotes(string movieId, string userId)
         {
-            return this.votesService.GetVote(movieId,userId);
+            return this.votesService.GetVote(movieId, userId);
         }
     }
 }
