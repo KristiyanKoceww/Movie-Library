@@ -1,5 +1,6 @@
 ﻿namespace MovieLibrary.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,7 @@
     {
         public Movie()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Categories = new HashSet<MovieCategory>();
             this.MovieNotes = new HashSet<MovieNote>();
             this.Votes = new HashSet<Vote>();

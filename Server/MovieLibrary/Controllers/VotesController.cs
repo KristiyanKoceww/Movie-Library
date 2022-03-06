@@ -20,7 +20,7 @@ namespace MovieLibrary.Web.Controllers
             this.votesService = votesService;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("AddVote")]
         public async Task<IActionResult> Vote(CreateVoteModel model)
         {
@@ -28,7 +28,7 @@ namespace MovieLibrary.Web.Controllers
             return Ok();
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("RemoveVote")]
         public async Task<IActionResult> RemoveVote(string movieId, string userId)
         {
@@ -44,8 +44,8 @@ namespace MovieLibrary.Web.Controllers
             }
           
         }
-
-        [HttpGet("GetVote")]
+        //[Authorize]
+       [HttpGet("GetVote")]
         public int GetVotes(string movieId, string userId)
         {
             return this.votesService.GetVote(movieId,userId);

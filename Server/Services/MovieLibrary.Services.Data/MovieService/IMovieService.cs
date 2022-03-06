@@ -7,7 +7,7 @@
 
     public interface IMovieService
     {
-        Task AddMovieToFavourites(AddMovieToFavModel movie, string userId);
+        Task AddMovieToFavourites(AddMovieToFavModel movie);
 
         Task RemoveMovieFromFavourites(string movieId, string userId);
 

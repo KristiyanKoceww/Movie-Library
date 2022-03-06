@@ -11,6 +11,6 @@
 
         Task DeleteNote(DeleteMovieNoteModel deleteMovieNoteModel);
 
-        IEnumerable<MovieNote> GetNotes(string userId , string movieId);
+        IEnumerable<MovieNote> GetNotes(GetMovieNoteModel getMovieNoteModel);
     }
 }

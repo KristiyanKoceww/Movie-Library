@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using MovieLibrary.Data.Common.Repositories;
-using MovieLibrary.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieLibrary.Services.Data.UsersService
+﻿namespace MovieLibrary.Services.Data.UsersService
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Identity;
+    using MovieLibrary.Data.Common.Repositories;
+    using MovieLibrary.Data.Models;
+
     public class UsersService : IUsersService
     {
         private readonly IRepository<ApplicationUser> appUserRepository;

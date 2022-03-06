@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using MovieLibrary.Data.Common.Repositories;
     using MovieLibrary.Data.Models;
 
@@ -21,7 +21,7 @@
             this.appUsersRepository = appUsersRepository;
         }
 
-        public async Task AddMovieToFavourites(AddMovieToFavModel movieModel, string userId)
+        public async Task AddMovieToFavourites(AddMovieToFavModel movieModel)
         {
             var movieExist = this.movieRepository.All().Where(x => x.Title == movieModel.Title).FirstOrDefault();
 
@@ -39,7 +39,7 @@
                 Description = movieModel.Description,
             };
 
-            var user = this.appUsersRepository.All().Where(x => x.Id == userId).FirstOrDefault();
+            var user = this.appUsersRepository.All().Where(x => x.Id == movieModel.UserId).FirstOrDefault();
 
             if (user is null)
             {
@@ -55,7 +55,7 @@
 
         public IEnumerable<Movie> GetMovies(string userId)
         {
-            var user = this.appUsersRepository.All().Where(x => x.Id == userId).FirstOrDefault();
+            var user = this.appUsersRepository.All().Where(x => x.Id == userId).Include(x => x.Movies).FirstOrDefault();
 
             if (user is null)
             {
@@ -67,25 +67,25 @@
                 throw new Exception("There are no movies added in favourites.");
             }
 
-            var movies = user.Movies.Select(x => new Movie()
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description = x.Description,
-                Lenght = x.Lenght,
-                Year = x.Lenght,
-                ImageUrl = x.ImageUrl,
-                MovieNotes = x.MovieNotes,
-                Categories = x.Categories,
-                Votes = x.Votes,
-            }).ToList();
+            //var movies = user.Movies.Select(x => new Movie()
+            //{
+            //    Id = x.Id,
+            //    Title = x.Title,
+            //    Description = x.Description,
+            //    Lenght = x.Lenght,
+            //    Year = x.Lenght,
+            //    ImageUrl = x.ImageUrl,
+            //    MovieNotes = x.MovieNotes,
+            //    Categories = x.Categories,
+            //    Votes = x.Votes,
+            //}).ToList();
 
-            return movies;
+            return user.Movies;
         }
 
         public async Task RemoveMovieFromFavourites(string movieId, string userId)
         {
-            var user = this.appUsersRepository.All().Where(x => x.Id == userId).FirstOrDefault();
+            var user = this.appUsersRepository.All().Where(x => x.Id == userId).Include(x => x.Movies).FirstOrDefault();
 
             if (user is null)
             {
@@ -99,14 +99,20 @@
 
             var movie = user.Movies.Where(x => x.Id == movieId).FirstOrDefault();
 
-            if (movie is null)
+            if (movie is not null)
+            {
+                user.Movies.Remove(movie);
+
+                this.appUsersRepository.Update(user);
+                this.movieRepository.HardDelete(movie);
+
+                await this.movieRepository.SaveChangesAsync();
+                await this.appUsersRepository.SaveChangesAsync();
+            }
+            else
             {
                 throw new Exception("No movie found by this id.");
             }
-
-            user.Movies.Remove(movie);
-
-            await this.appUsersRepository.SaveChangesAsync();
         }
     }
 }

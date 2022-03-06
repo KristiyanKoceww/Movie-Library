@@ -20,14 +20,14 @@ namespace MovieLibrary.Web.Controllers
     {
         private readonly IUsersService userService;
         private readonly ILogger<UsersController> logger;
-        private readonly MovieLibrary.Services.Data.JwtService.SingInManager signInManager;
+        private readonly MovieLibrary.Services.Data.JwtService.Manager signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtAuthService jwtAuthService;
 
         public UsersController(
             IUsersService userService,
             ILogger<UsersController> logger,
-           MovieLibrary.Services.Data.JwtService.SingInManager signInManager,
+           MovieLibrary.Services.Data.JwtService.Manager signInManager,
             UserManager<ApplicationUser> userManager,
             JwtAuthService jwtAuthService)
         {

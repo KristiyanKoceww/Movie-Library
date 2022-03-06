@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using MovieLibrary.Data.Common.Repositories;
     using MovieLibrary.Data.Models;
 
@@ -51,7 +51,7 @@
             var vote = this.votesRepository.All()
                  .FirstOrDefault(x => x.MovieId == movieId && x.UserId == userId);
 
-            var movie = this.moviesRepository.All().Where(x => x.Id == movieId).FirstOrDefault();
+            var movie = this.moviesRepository.All().Where(x => x.Id == movieId).Include(x => x.Votes).FirstOrDefault();
 
             if (vote is null)
             {
@@ -68,10 +68,10 @@
             {
                 movie.Votes.Remove(movieVote);
 
+                this.moviesRepository.Update(movie);
+                this.votesRepository.HardDelete(vote);
+
                 await this.moviesRepository.SaveChangesAsync();
-
-                this.votesRepository.Delete(vote);
-
                 await this.votesRepository.SaveChangesAsync();
             }
             else
@@ -82,7 +82,7 @@
 
         public byte GetVote(string movieId, string userId)
         {
-            var movie = this.moviesRepository.All().Where(x => x.Id == movieId).FirstOrDefault();
+            var movie = this.moviesRepository.All().Where(x => x.Id == movieId).Include(x => x.Votes).FirstOrDefault();
 
             if (movie is not null)
             {

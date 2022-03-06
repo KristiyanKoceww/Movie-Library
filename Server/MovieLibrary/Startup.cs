@@ -23,6 +23,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using MovieLibrary.Services.Data.UsersService;
+using MovieLibrary.Services.Data.MovieService;
+using MovieLibrary.Services.Data.NoteService;
+using MovieLibrary.Services.Data.VoteService;
+
 
 namespace MovieLibrary
 {
@@ -53,6 +58,12 @@ namespace MovieLibrary
 
 
             services.AddScoped<JwtAuthService>();
+            services.AddScoped<Manager>();
+
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<INoteService, NoteService>();
+            services.AddTransient<IVotesService, VotesService>();
 
             var jwtTokenConfig = configuration.GetSection("jwt").Get<JwtTokenConfig>();
             services.AddSingleton(jwtTokenConfig);

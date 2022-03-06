@@ -13,17 +13,17 @@
     using MovieLibrary.Data.Common.Repositories;
     using MovieLibrary.Data.Models;
 
-    public class SingInManager
+    public class Manager
     {
         private readonly IRepository<RefreshToken> refreshTokenRepository;
         private readonly IRepository<ApplicationUser> appUserRepository;
-        private readonly ILogger<SingInManager> logger;
+        private readonly ILogger<Manager> logger;
 
         private readonly JwtAuthService jwtAuthService;
         private readonly JwtTokenConfig jwtTokenConfig;
 
-        public SingInManager(
-            ILogger<SingInManager> logger,
+        public Manager(
+            ILogger<Manager> logger,
             JwtAuthService jwtAuthService,
             JwtTokenConfig jwtTokenConfig,
             IRepository<RefreshToken> refreshTokenRepository,

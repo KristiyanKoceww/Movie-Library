@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using MovieLibrary.Data.Common.Repositories;
     using MovieLibrary.Data.Models;
 
@@ -50,6 +50,7 @@
 
             movie.MovieNotes.Add(movieNote);
 
+            this.moviesRepository.Update(movie);
             await this.movieNotesRepository.AddAsync(movieNote);
 
             await this.movieNotesRepository.SaveChangesAsync();
@@ -59,7 +60,7 @@
 
         public async Task DeleteNote(DeleteMovieNoteModel deleteMovieNoteModel)
         {
-            var movie = this.moviesRepository.All().Where(x => x.Id == deleteMovieNoteModel.MovieId).FirstOrDefault();
+            var movie = this.moviesRepository.All().Where(x => x.Id == deleteMovieNoteModel.MovieId).Include(x => x.MovieNotes).FirstOrDefault();
             var note = this.movieNotesRepository.All().Where(x => x.Id == deleteMovieNoteModel.NoteId).FirstOrDefault();
 
             if (movie is null)
@@ -67,23 +68,26 @@
                 throw new Exception("No movie found.");
             }
 
-            if (note is null)
+            if (note is not null)
+            {
+                movie.MovieNotes.Remove(note);
+                this.moviesRepository.Update(movie);
+
+                this.movieNotesRepository.HardDelete(note);
+
+                await this.moviesRepository.SaveChangesAsync();
+                await this.movieNotesRepository.SaveChangesAsync();
+            }
+            else
             {
                 throw new Exception("No note found.");
             }
-
-            movie.MovieNotes.Remove(note);
-
-            this.movieNotesRepository.Delete(note);
-
-            await this.movieNotesRepository.SaveChangesAsync();
-            await this.moviesRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<MovieNote> GetNotes(string userId, string movieId)
+        public IEnumerable<MovieNote> GetNotes(GetMovieNoteModel getMovieNoteModel)
         {
-            var user = this.appUsersRepository.All().Where(x => x.Id == userId).FirstOrDefault();
-            var movie = this.moviesRepository.All().Where(x => x.Id == movieId).FirstOrDefault();
+            var user = this.appUsersRepository.All().Where(x => x.Id == getMovieNoteModel.UserId).FirstOrDefault();
+            var movie = this.moviesRepository.All().Where(x => x.Id == getMovieNoteModel.MovieId).Include(x => x.MovieNotes).FirstOrDefault();
             if (user is null)
             {
                 throw new Exception("No user found.");
@@ -94,7 +98,7 @@
                 throw new Exception("No movie found.");
             }
 
-            var notes = movie.MovieNotes.Where(x => x.UserId == userId).ToList();
+            var notes = movie.MovieNotes.Where(x => x.UserId == getMovieNoteModel.UserId).ToList();
 
             if (notes.Count == 0)
             {
