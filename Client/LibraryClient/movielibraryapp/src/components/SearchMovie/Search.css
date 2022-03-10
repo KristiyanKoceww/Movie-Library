@@ -1,0 +1,14 @@
+.movie {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 300px;
+    width: 800px;
+}
+
+.movie_info {
+    width: 300px;
+    flex: 50px 50px 50px;
+    margin: 130px;
+    padding: 10px;
+}

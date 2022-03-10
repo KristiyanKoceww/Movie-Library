@@ -1,0 +1,26 @@
+.Login {
+  margin: auto;
+  width: 30%;
+}
+
+.title__login {
+  font-weight: 700;
+  font-size: 30px;
+  color: black;
+  padding: 10px;
+  margin: auto !important;
+}
+
+.LoginButton {
+  color: whitesmoke !important;
+  font-weight: 600 !important;
+  font-family: 'Times New Roman', Times, serif !important;
+  margin: auto;
+  width: 100%;
+  background-color: #087AEA !important;
+}
+
+.LoginButtonDiv {
+  margin: auto;
+  width: 100%;
+}

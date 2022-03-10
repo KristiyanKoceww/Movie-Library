@@ -1,0 +1,41 @@
+.hero {
+
+    color: black;
+    height: 500px;
+    background-color: green;
+    /* background-image: url("./banner-1976082.jpg");
+    background-size: cover;
+    background-position: 100%; */
+}
+
+.hero_title {
+    color: whitesmoke;
+    font-size: 50px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.hero_description {
+    color: whitesmoke;
+    font-size: 30px;
+    font-weight: 900;
+    text-align:start;
+    padding: 50px;
+  
+}
+
+.search_button{
+    color: whitesmoke !important;
+    font-weight: 600 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    margin: auto;
+    width: 20%;
+    background-color: #087AEA !important;
+    
+}
+.search_b{
+    margin:auto;
+    padding: 20px;
+    padding-left: 50px;
+    margin-top: -50px;
+}

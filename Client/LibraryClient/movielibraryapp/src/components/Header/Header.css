@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+    background-color: #087AEA;
+}
+
+.header_title {
+    color: #edf0f1;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.login {
+    background-color: #087AEA !important;
+    color: whitesmoke !important;
+    font-weight: 600 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    margin: auto;
+}
+
+.register {
+    background-color: #087AEA !important;
+    color: whitesmoke !important;
+    font-weight: 600 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    margin: auto;
+}
+
+.home {
+    background-color: #087AEA !important;
+    color: whitesmoke !important;
+    font-weight: 600 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    margin: auto;
+}
+
+.logout {
+    background-color: #087AEA !important;
+    color: whitesmoke !important;
+    font-weight: 600 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    margin: auto;
+}
+
+.textFieldTitle{
+    color: whitesmoke;
+}

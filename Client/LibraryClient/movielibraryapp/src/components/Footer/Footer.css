@@ -1,0 +1,23 @@
+footer {
+    background-color: #087AEA;
+    color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    
+  }
+  
+  .info {
+    font-weight: 600;
+    color: whitesmoke;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 5px;
+    margin-left: 10px;
+  }
+  
+  .links {
+    padding: 5px;
+    text-align: center;
+  }
