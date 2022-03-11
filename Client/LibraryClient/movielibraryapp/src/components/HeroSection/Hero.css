@@ -9,23 +9,24 @@
 }
 
 .hero_title {
-    color: whitesmoke;
+    color: rgb(0, 0, 0);
     font-size: 50px;
     font-weight: 900;
     text-align: center;
 }
 
 .hero_description {
-    color: whitesmoke;
-    font-size: 30px;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
     font-weight: 900;
     text-align:start;
     padding: 50px;
+    text-align: center;
   
 }
 
 .search_button{
-    color: whitesmoke !important;
+    color: rgb(255, 255, 255) !important;
     font-weight: 600 !important;
     font-family: 'Times New Roman', Times, serif !important;
     margin: auto;
@@ -38,4 +39,11 @@
     padding: 20px;
     padding-left: 50px;
     margin-top: -50px;
+}
+
+.hero{
+    background-image: url('./4.jpg');
+    background-size:1100px;
+    background-position: 100%;
+    filter: brightness(115%);
 }

@@ -5,17 +5,18 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { UserContext } from '../AcountManagment/UserContext';
 import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const Header = () => {
     const { appUser, setAppUser } = useContext(UserContext);
     const [query, setQuery] = useState('');
     const [movie, setMovie] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
+
+    const history = useHistory();
 
     const search = async (e) => {
         var searchUrl = process.env.REACT_APP_MOVIEAPIURL;
         e.preventDefault();
-        setIsLoading(true);
 
         fetch(searchUrl + query + '&?plot=full', {
             method: "GET",
@@ -28,18 +29,17 @@ const Header = () => {
         })
             .then(result => {
                 setMovie(result);
-                setIsLoading(false);
+
                 setRedirect(true);
             })
     }
 
     if (redirect === true) {
-       return <Redirect
-            to={{
-                pathname: "/movies/" + movie.Title,
-                state: { referrer: movie }
-            }}
-        />
+        const location = {
+            pathname: "/movies/" + movie.Title,
+            state: { referrer: movie }
+        }
+        history.push(location);
     }
 
     if (Object.keys(appUser ? appUser : {}).length === 0) {
@@ -68,10 +68,11 @@ const Header = () => {
                 <a className="header_title">My Movie Collection</a>
 
                 <div className="search_movie">
-                    <TextField className="textFieldTitle"
+                    {/* <TextField className="textFieldTitle"
                         label="Search..."
                         size="small" id="standard-basic"
-                        onChange={(e) => setQuery(e.target.value)} />
+                        onChange={(e) => setQuery(e.target.value)} /> */}
+                    <input required onChange={(e) => setQuery(e.target.value)} />
                     {" "}
                     <Button className="home" type="submit" variant="outlined" onClick={(e) => search(e)}>Search</Button>
                 </div>

@@ -9,7 +9,7 @@ const Logout = (e) => {
   setAppUser(null);
 
   return (
-    <Redirect to="/Login" />
+    <Redirect to="/" />
   )
 }
 export default Logout

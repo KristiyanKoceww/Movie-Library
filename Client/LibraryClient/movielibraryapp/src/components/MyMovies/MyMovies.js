@@ -42,9 +42,9 @@ const MyMovies = () => {
         return (
             <div className="favourites">
                 <h1 className="title">Your Favorites</h1>
-                {movies.map((item, index) => {
+                {movies.slice(0,5).map((item, index) => {
                     return (
-                        <img keys={index} src={item.imageUrl} style={{ padding: 10 }} />
+                        <img key={index} keys={index} src={item.imageUrl} style={{ padding: 10 }} />
                     )
                 })}
 

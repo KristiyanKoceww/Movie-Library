@@ -36,11 +36,11 @@
 
         [Authorize]
         [HttpPost("RemoveFromFavourites")]
-        public async Task<IActionResult> RemoveMovieFromFavourites([FromBody] string movieId, string userId)
+        public async Task<IActionResult> RemoveMovieFromFavourites([FromBody] RemoveMovieFromFavModel removeMovieModel)
         {
             try
             {
-                await this.movieService.RemoveMovieFromFavourites(movieId, userId);
+                await this.movieService.RemoveMovieFromFavourites(removeMovieModel.MovieId, removeMovieModel.UserId);
                 return Ok();
             }
             catch (Exception ex)

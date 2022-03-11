@@ -60,7 +60,7 @@ function App() {
               <Route path='/' exact render={Home} />
               <Route path='/Login' component={Login} />
               <Route path='/Register' component={Register} />
-              <Route path='/Logout' component={Logout} />
+              <ProtectedRoute path='/Logout' component={Logout}  auth={isAuthenticated} />
               <Route path='/Error' component={Error} />
               <Route path='/Privacy' component={Privacy} />
 

@@ -96,6 +96,29 @@ const Movie = (movie) => {
                 }
             })
     }
+    const handleRemove = (e) =>{
+        e.preventDefault();
+
+        var removeMovieFromFav = process.env.REACT_APP_BASEURL + 'api/Movie/RemoveFromFavourites';
+        const movieId = appUser.movies.find(obj => { return obj.title === movie.movie.Title }).id;
+        const data = {
+            UserId: appUser.id,
+            MovieId: movieId,
+        }
+        fetch(removeMovieFromFav, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + jwt,
+            },
+            body: JSON.stringify(data),
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Failed to remove the movie!');
+                }
+            })
+    }
     return (
         <div>
             <div className="movie">
@@ -118,7 +141,7 @@ const Movie = (movie) => {
                 <div className="movie_info">
                     {appUser && appUser.movies.find(obj => { return obj.title === movie.movie.Title }) &&
                         <div>
-                            <Button className="removeFromFav" type="submit" variant="outlined">Remove from favourites</Button>
+                            <Button className="removeFromFav" type="submit" variant="outlined" onClick={handleRemove}>Remove from favourites</Button>
                         </div>
                     }
                 </div>

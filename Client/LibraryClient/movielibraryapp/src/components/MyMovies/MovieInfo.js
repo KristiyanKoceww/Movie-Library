@@ -8,7 +8,6 @@ const MovieInfo = () => {
 
     return (
         <div>
-            <Header />
             <Movie movie={movie} />
         </div>
 

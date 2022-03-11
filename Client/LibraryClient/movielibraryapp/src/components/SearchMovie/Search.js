@@ -79,14 +79,15 @@ const SearchMovie = () => {
                         <TextField className="textFieldTitle"
                             label="Search..."
                             size="small" id="standard-basic"
-                            onChange={(e) => setQuery(e.target.value)} />
+                            onChange={(e) => setQuery(e.target.value)}
+                            required />
                         {" "}
                         <Button className="home" type="submit" variant="outlined">Search</Button>
                     </div>
                 </form>
             </div>
             {
-                !isLoading && movie &&
+                movie &&
                 <div className="movie">
                     <div className="movie_poster">
                         <img src={movie.Poster} alt="img" />

@@ -22,10 +22,6 @@ const Footer = () => {
         <Link to="/Privacy">
           <Button className="home" type="button">Privacy</Button>
         </Link>
-        {" "}
-        <Link to="/Aboutus">
-          <Button className="home" type="button">About us</Button>
-        </Link>
       </div>
     </footer>
   )

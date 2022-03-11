@@ -62,7 +62,7 @@
 
         public IEnumerable<Movie> GetMovies(string userId)
         {
-            var user = this.appUsersRepository.All().Where(x => x.Id == userId).Include(x => x.Movies).Take(5).FirstOrDefault();
+            var user = this.appUsersRepository.All().Where(x => x.Id == userId).Include(x => x.Movies).FirstOrDefault();
 
             if (user is null)
             {
@@ -98,10 +98,11 @@
                 user.Movies.Remove(movie);
 
                 this.appUsersRepository.Update(user);
-                this.movieRepository.HardDelete(movie);
-
-                await this.movieRepository.SaveChangesAsync();
                 await this.appUsersRepository.SaveChangesAsync();
+
+                this.movieRepository.HardDelete(movie);
+                await this.movieRepository.SaveChangesAsync();
+
             }
             else
             {
