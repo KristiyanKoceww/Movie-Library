@@ -22,7 +22,7 @@ namespace MovieLibrary.Web.Controllers
 
         [Authorize]
         [HttpPost("AddNote")]
-        public async Task<IActionResult> AddMovieNote([FromForm] CreateNoteModel createNoteModel)
+        public async Task<IActionResult> AddMovieNote([FromBody] CreateNoteModel createNoteModel)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace MovieLibrary.Web.Controllers
 
         [Authorize]
         [HttpPost("RemoveNote")]
-        public async Task<IActionResult> RemoveMovieNote([FromForm] DeleteMovieNoteModel deleteMovieNoteModel)
+        public async Task<IActionResult> RemoveMovieNote([FromBody] DeleteMovieNoteModel deleteMovieNoteModel)
         {
             try
             {
@@ -51,12 +51,18 @@ namespace MovieLibrary.Web.Controllers
         }
 
         [Authorize]
-        [HttpPost("GetMovieNote")]
-        public async Task<IActionResult> GetMovieNote([FromForm] GetMovieNoteModel getMovieNoteModel)
+        [HttpGet("GetMovieNote")]
+        public async Task<IActionResult> GetMovieNote(string movieId, string userId)
         {
             try
             {
-                var notes = this.noteService.GetNotes(getMovieNoteModel);
+                var model = new GetMovieNoteModel()
+                {
+                    MovieId = movieId,
+                    UserId = userId
+                };
+
+                var notes = this.noteService.GetNotes(model);
                 return Ok(notes);
             }
             catch (Exception ex)

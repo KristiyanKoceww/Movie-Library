@@ -15,6 +15,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
 import Search from './components/SearchMovie/Search';
+import MovieInfo from './components/MyMovies/MovieInfo';
 
 function App() {
   const [appUser, setAppUser] = useState({});
@@ -64,6 +65,7 @@ function App() {
               <Route path='/Privacy' component={Privacy} />
 
               <ProtectedRoute path='/Search' component={Search} auth={isAuthenticated} />
+              <ProtectedRoute path='/Movies/' component={MovieInfo} auth={isAuthenticated} />
             </Switch>
           </main>
           <Footer />

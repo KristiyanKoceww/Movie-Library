@@ -49,7 +49,6 @@ const Login = () => {
           setRedirect(true);
         }
         setAppUser(res.user);
-        console.log(res.user);
       })
       .catch((err) => setError(err.message))
       .finally(setError(null));
@@ -125,8 +124,6 @@ const Login = () => {
           </div>
         </form>
       )}
-
-      <Footer />
     </div>
   );
 };

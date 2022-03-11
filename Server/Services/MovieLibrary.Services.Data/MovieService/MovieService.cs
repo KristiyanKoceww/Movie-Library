@@ -25,38 +25,44 @@
         public async Task AddMovieToFavourites(AddMovieToFavModel movieModel)
         {
             var movieExist = this.movieRepository.All().Where(x => x.Title == movieModel.Title).FirstOrDefault();
-
-            if (movieExist is not null)
-            {
-                throw new Exception("This movie is already added to your collection");
-            }
-
-            var movie = new Movie()
-            {
-                Title = movieModel.Title,
-                ImageUrl = movieModel.ImageUrl,
-                Lenght = movieModel.Lenght,
-                Year = movieModel.Year,
-                Description = movieModel.Description,
-            };
-
             var user = this.appUsersRepository.All().Where(x => x.Id == movieModel.UserId).FirstOrDefault();
-
             if (user is null)
             {
                 throw new Exception("No user found.");
             }
 
-            user.Movies.Add(movie);
+            if (movieExist is null)
+            {
+                var movie = new Movie()
+                {
+                    Title = movieModel.Title,
+                    ImageUrl = movieModel.ImageUrl,
+                    Lenght = movieModel.Lenght,
+                    Year = movieModel.Year,
+                    Description = movieModel.Description,
+                };
 
-            await this.movieRepository.AddAsync(movie);
-            await this.movieRepository.SaveChangesAsync();
-            await this.appUsersRepository.SaveChangesAsync();
+                user.Movies.Add(movie);
+
+                await this.movieRepository.AddAsync(movie);
+                await this.movieRepository.SaveChangesAsync();
+                await this.appUsersRepository.SaveChangesAsync();
+            }
+            else
+            {
+                if (user.Movies.Any(x => x.Title == movieModel.Title))
+                {
+                    throw new Exception("This movie is already added to your collection");
+                }
+
+                user.Movies.Add(movieExist);
+                await this.appUsersRepository.SaveChangesAsync();
+            }
         }
 
         public IEnumerable<Movie> GetMovies(string userId)
         {
-            var user = this.appUsersRepository.All().Where(x => x.Id == userId).Include(x => x.Movies).FirstOrDefault();
+            var user = this.appUsersRepository.All().Where(x => x.Id == userId).Include(x => x.Movies).Take(5).FirstOrDefault();
 
             if (user is null)
             {

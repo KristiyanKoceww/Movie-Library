@@ -4,8 +4,43 @@ import { useContext, useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { UserContext } from '../AcountManagment/UserContext';
+import { Redirect } from 'react-router-dom';
 const Header = () => {
     const { appUser, setAppUser } = useContext(UserContext);
+    const [query, setQuery] = useState('');
+    const [movie, setMovie] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [redirect, setRedirect] = useState(false);
+
+    const search = async (e) => {
+        var searchUrl = process.env.REACT_APP_MOVIEAPIURL;
+        e.preventDefault();
+        setIsLoading(true);
+
+        fetch(searchUrl + query + '&?plot=full', {
+            method: "GET",
+        }
+        ).then(r => {
+            if (!r.ok) {
+                throw new Error('Fetching data failed!');
+            }
+            return r.json()
+        })
+            .then(result => {
+                setMovie(result);
+                setIsLoading(false);
+                setRedirect(true);
+            })
+    }
+
+    if (redirect === true) {
+       return <Redirect
+            to={{
+                pathname: "/movies/" + movie.Title,
+                state: { referrer: movie }
+            }}
+        />
+    }
 
     if (Object.keys(appUser ? appUser : {}).length === 0) {
         return (
@@ -35,9 +70,10 @@ const Header = () => {
                 <div className="search_movie">
                     <TextField className="textFieldTitle"
                         label="Search..."
-                        color="warning"
-                        size="small" id="standard-basic" />
-                    <Button className="home" type="submit" variant="outlined">Search</Button>
+                        size="small" id="standard-basic"
+                        onChange={(e) => setQuery(e.target.value)} />
+                    {" "}
+                    <Button className="home" type="submit" variant="outlined" onClick={(e) => search(e)}>Search</Button>
                 </div>
 
 

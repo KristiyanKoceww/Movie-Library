@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
+
+import { UserContext } from '../AcountManagment/UserContext';
+import { useContext, useEffect, useState } from 'react';
 
 import './Search.css'
 
@@ -11,6 +12,9 @@ const SearchMovie = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     var searchUrl = process.env.REACT_APP_MOVIEAPIURL;
+    var addMovieToFav = process.env.REACT_APP_BASEURL + 'api/Movie/AddToFavourites';
+    const jwt = localStorage.getItem("jwt");
+    const { appUser, setAppUser } = useContext(UserContext);
 
     const Search = async (e) => {
         e.preventDefault();
@@ -27,20 +31,53 @@ const SearchMovie = () => {
         })
             .then(result => {
                 setMovie(result);
-                console.log(result);
-                setQuery('')
                 setIsLoading(false);
             });
     }
+
+    const AddToFav = async(e, movie) =>{
+        e.preventDefault();
+        setIsLoading(true);
+
+        const movieLenght = movie.Runtime.replace(/\D/g, '');
+      
+        const data = {
+            Title: movie.Title,
+            Description: movie.Plot,
+            Year: movie.Year,
+            Lenght: movieLenght,
+            ImageUrl: movie.Poster,
+            UserId: appUser.id
+        }
+
+        fetch(addMovieToFav, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + jwt
+            },
+            body: JSON.stringify(data)
+        }
+        ).then(r => {
+            if (!r.ok) {
+                throw new Error('Adding to favourites failed!');
+            }
+            return r.json()
+        })
+            .then(result => {
+                setIsLoading(false);
+            });
+    }
+
     return (
         <div>
             <div>
                 <form onSubmit={Search}>
                     <h1>Search</h1>
+                    <br />
                     <div className="search_movie">
                         <TextField className="textFieldTitle"
                             label="Search..."
-                            color="warning"
                             size="small" id="standard-basic"
                             onChange={(e) => setQuery(e.target.value)} />
                         {" "}
@@ -51,24 +88,31 @@ const SearchMovie = () => {
             {
                 !isLoading && movie &&
                 <div className="movie">
-                    <div className="movie_info">
+                    <div className="movie_poster">
                         <img src={movie.Poster} alt="img" />
                     </div>
                     <div className="movie_info">
                         <h1>{movie.Title} ({movie.Year})</h1>
-                        <h5>{movie.Genre} | {movie.Runtime}</h5>
-                        <h5>{movie.Plot}</h5>
-                        <h5>Awards: {movie.Awards}</h5>
-                        <h5>Director: {movie.Director}</h5>
-                        <h5>Released: {movie.Released}</h5>
-                        <h5>Imdb rating: {movie.imdbRating}</h5>
-                        <Button className="home" type="submit" variant="outlined">Add to favourites</Button>
+                        <h3>{movie.Genre} | {movie.Runtime}</h3>
+                    </div>
+                    <div className="movie_info">
+                        <p className="movie_plot">{movie.Plot}</p>
+                    </div>
+                    <div className="movie_info">
+                        <p>Awards: {movie.Awards}</p>
+                        <p>Director: {movie.Director}</p>
+                        <p>Released: {movie.Released}</p>
+                        <p>Imdb rating: {movie.imdbRating}</p>
+                        <div className="btn_fav">
+                            <Button className="home" size='large' variant="outlined" onClick={(e) => AddToFav(e, movie)}>Add to favourites</Button>
+                        </div>
                     </div>
                 </div>
+
             }
 
 
-        </div>
+        </div >
     )
 }
 

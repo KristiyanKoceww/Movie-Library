@@ -41,7 +41,6 @@ namespace MovieLibrary
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(
@@ -140,7 +139,6 @@ namespace MovieLibrary
             });
 
             services.AddCors();
-            services.AddControllers();
 
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
@@ -161,7 +159,6 @@ namespace MovieLibrary
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -179,12 +176,13 @@ namespace MovieLibrary
             }
 
             app.UseCors(options => options.WithOrigins(new[] {
-            "http://localhost:3000","http://localhost:8080","http://localhost:4200"}).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            "http://localhost:3000","http://localhost:8080","http://localhost:4200", "https://localhost:44322"}).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

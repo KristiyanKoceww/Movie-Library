@@ -21,7 +21,7 @@
 
         [Authorize]
         [HttpPost("AddToFavourites")]
-        public async Task<IActionResult> AddMovieToFavourites([FromForm] AddMovieToFavModel addMovieToFavModel)
+        public async Task<IActionResult> AddMovieToFavourites([FromBody] AddMovieToFavModel addMovieToFavModel)
         {
             try
             {
@@ -36,7 +36,7 @@
 
         [Authorize]
         [HttpPost("RemoveFromFavourites")]
-        public async Task<IActionResult> RemoveMovieFromFavourites([FromForm] string movieId, string userId)
+        public async Task<IActionResult> RemoveMovieFromFavourites([FromBody] string movieId, string userId)
         {
             try
             {
@@ -50,8 +50,8 @@
         }
 
         [Authorize]
-        [HttpPost("GetFavourites")]
-        public string GetFavourites([FromForm] string userId)
+        [HttpGet("GetFavourites")]
+        public string GetFavourites(string userId)
         {
             try
             {
